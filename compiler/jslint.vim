@@ -11,13 +11,15 @@ endif
 let s:cpo_save = &cpo
 set cpo-=C
 
-let s:runner_cmd = 'java -jar "' . expand('<sfile>:p:h') . '/jslint/jslint4java/jslint4java-1.4.7.jar" '
+if executable('node')
+  let s:runner_cmd = 'node "' . expand('<sfile>:p:h') . '/jslint/node_jslint.js" '
+  CompilerSet errorformat=%f:%l:%c:%m
+else
+  let s:runner_cmd = 'java -jar "' . expand('<sfile>:p:h') . '/jslint/jslint4java/jslint4java-1.4.7.jar" '
+  CompilerSet errorformat=jslint:%f:%l:%c:%m
+endif
 let s:makeprg_str = 'CompilerSet makeprg=' . escape(s:runner_cmd . '"%:p"', ' "')
 execute s:makeprg_str
-
-"CompilerSet makeprg=jslint.bat\ \"%:p\"
-
-CompilerSet errorformat=jslint:%f:%l:%c:%m
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
