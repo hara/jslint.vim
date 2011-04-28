@@ -2,7 +2,7 @@
 /*global require, process*/
 (function (global) {
     var fs = require('fs'),
-        JSLINT = require('./jslint');
+        JSLINT = require('./jslint.module').JSLINT;
 
     fs.readFile(process.argv[2], 'utf-8', function (err, data) {
         var result,
